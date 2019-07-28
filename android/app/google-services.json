@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "2482482701",
+    "firebase_url": "https://launchapp-21621.firebaseio.com",
+    "project_id": "launchapp-21621",
+    "storage_bucket": "launchapp-21621.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:2482482701:android:42774c530943e4c0",
+        "android_client_info": {
+          "package_name": "com.iyzico.launchapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "2482482701-b9b3pf9330b840h1aaeu93r31vu2dij8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBwM8gRdssvBUhtjoe3n2T8EMLknhT5Te4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "2482482701-b9b3pf9330b840h1aaeu93r31vu2dij8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
