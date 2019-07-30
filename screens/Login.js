@@ -2,15 +2,23 @@ import React from 'react'
 import { StyleSheet, Text, TextInput, View, Button } from 'react-native'
 import firebase from 'react-native-firebase'
 
+import { ERROR_MSG_EMPTY_FIELDS } from "../Constants"
+
 export default class Login extends React.Component {
   state = { email: '', password: '', errorMessage: null }
 
   handleLogin = () => {
     const { email, password } = this.state
+
+    if (email === '' || password === '') {
+      this.setState({ errorMessage: ERROR_MSG_EMPTY_FIELDS })
+      return
+    }
+
     firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
-      .then(() => this.props.navigation.navigate('Main'))
+      .then(() => this.props.navigation.navigate('Dashboard'))
       .catch(error => this.setState({ errorMessage: error.message }))
   }
 

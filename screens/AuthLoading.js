@@ -5,12 +5,11 @@ import firebase from 'react-native-firebase'
 export default class AuthLoading extends React.Component {
   componentDidMount() {
     firebase.auth().onAuthStateChanged(user => {
-      this.props.navigation.navigate(user ? 'Dashboard' : 'SignUp')
+      // Navigates to Login screen or Dashboard whenever user changes
+      this.props.navigation.navigate(user ? 'Dashboard' : 'Login')
     })
-
-
   }
-  
+
   render() {
     return (
       <View style={styles.container}>
