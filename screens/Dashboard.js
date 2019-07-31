@@ -1,8 +1,11 @@
 import React from 'react'
-import { StyleSheet, Button, Text, View } from 'react-native'
+import { Button, Card, Icon } from 'react-native-elements'
+import { StyleSheet, Text, ScrollView, View } from 'react-native'
 import firebase from 'react-native-firebase'
 
 import { API_LAUNCHES, API_ROCKETS, URL_DEFAULT_ROCKET_IMG } from "../Constants"
+import parseDate from '../util/parseDate'
+import prettifyDate from '../util/prettifyDate'
 
 export default class Dashboard extends React.Component {
   state = {
@@ -20,10 +23,13 @@ export default class Dashboard extends React.Component {
     rocketImages: [],
   }
 
-  async componentDidMount() {
+  componentDidMount() {
     const { currentUser } = firebase.auth()
     this.setState({ currentUser })
+    this.initializeData()
+  }
 
+  async initializeData() {
     await this.getFirst10Launches()
     this.getRocketImages()
   }
@@ -43,12 +49,22 @@ export default class Dashboard extends React.Component {
       headers: { Accept: 'application/json' },
     })
       .then(response => response.json())
-      .then(response => this.setState({
-        launches: response.launches,
-        launchOffset: response.offest,
-        launchCount: response.count,
-        fetchingLaunches: false,
-      }))
+      .then(response => {
+        // Parse dates into specified GMT+3 format for display.
+        response.launches = response.launches.map(launch => {
+          let date = new Date(...parseDate(launch.windowstart))
+          date.setHours(date.getHours() + 3)
+          launch.windowstartGMT3String = prettifyDate(date)
+          return launch
+        })
+
+        this.setState({
+          launches: response.launches,
+          launchOffset: response.offest,
+          launchCount: response.count,
+          fetchingLaunches: false,
+        })
+      })
       .catch(errorMessage => this.setState({ errorMessage }))
   }
 
@@ -110,28 +126,68 @@ export default class Dashboard extends React.Component {
       .catch(errorMessage => this.setState({ errorMessage }))
   }
 
-  // TODO: Add placeholders while fetchnig
+  renderLaunches() {
+    const { launches, rocketImages } = this.state
+
+    const cards = launches.map((launch, i) => {
+      const [date, time] = launch.windowstartGMT3String.split(' ')
+
+      return <Card
+        key={i}
+        image={rocketImages[i] ? { uri: rocketImages[i] } : undefined}
+      >
+        <Text style={styles.cardTitle}>{launch.name}</Text>
+        <View style={styles.cardDescription}>
+
+          <Text style={styles.cardDescriptionDate}>{date}</Text>
+          <Text style={styles.cardDescriptionTime}>{time}</Text>
+        </View>
+      </Card>
+    })
+
+    return cards
+  }
+
+  // TODO: Add placeholders while fetching
   render() {
-    const { currentUser } = this.state
+    const { currentUser, errorMessage, launches, rocketImages } = this.state
     return (
       <View style={styles.container}>
         {/* HEADER ROW*/}
         <View style={styles.headerRow}>
           <Text style={styles.headerText}>Launch List</Text>
+          <View style={styles.headerRightCol}>
+            {currentUser &&
+              <Text style={styles.currentUserText} numberOfLines={1}>
+                {currentUser.email}
+              </Text>
+            }
+            <Button
+              onPress={this.handleSignOut}
+              icon={<Icon
+                name="log-out"
+                type="feather"
+                color="white"
+              />}
+              title="Log out"
+              type="clear"
+              titleStyle={{color:'white', marginLeft: 5}}
+            />
+
+          </View>
         </View>
 
         {/* MAIN VIEW */}
-        <View style={styles.main}>
-          {this.state.errorMessage &&
-            <Text style={{ color: 'red' }}>
-              {this.state.errorMessage}
-            </Text>
-          }
-          <Text>
-            Hi {currentUser && currentUser.email}!
-          </Text>
-          <Button title="Sign Out" onPress={this.handleSignOut} />
-        </View>
+        <ScrollView style={styles.scrollView}>
+          <View style={styles.mainView}>
+            {errorMessage &&
+              <Text style={{ color: 'red' }}>
+                {errorMessage}
+              </Text>
+            }
+            {launches.length > 0 && this.renderLaunches()}
+          </View>
+        </ScrollView>
       </View>
     )
   }
@@ -140,21 +196,52 @@ export default class Dashboard extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'stretch',
+    fontFamily: 'sans-serif',
   },
   headerRow: {
     flex: 0.1,
-    backgroundColor: 'red',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    backgroundColor: '#8ecccc',
+    color: 'white',
     width: '100%',
   },
   headerText: {
+    flex: .5,
     fontSize: 25,
+    marginLeft: 10,
+    textAlignVertical: 'center',
     color: 'white',
-    margin: 5,
+  },
+  headerRightCol: {
+    flex: .25,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 10,
+    marginBottom: 5,
+  },
+  currentUserText: {
+    color: 'white',
+    fontStyle: 'italic',
+  },
+  scrollView: {
+    flex: 0.9
   },
   main: {
-    flex: 0.9,
-    justifyContent: 'center'
+    flex: 1,
+    alignSelf: 'stretch',
+    alignItems: 'stretch',
+    justifyContent: 'center',
+    backgroundColor: 'green',
+  },
+  cardTitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  cardDescription: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   }
 })
