@@ -14,14 +14,14 @@ See [CHANGELOG.md](CHANGELOG.md) for change/development history.
 
 ### v0.0.5:
 <p float="left" align="center">
-<img src="./docs/v5_1.1.png" width="288" height ="512" >
-<img src="./docs/v5_1.png" width="288" height ="512" >
-<img src="./docs/v5_2.png" width="288" height ="512">
+<img src="./docs/v5_1.1.png" width="270" height ="480 " >
+<img src="./docs/v5_1.png" width="270" height ="480 " >
+<img src="./docs/v5_2.png" width="270" height ="480 ">
 </p>
 
 ### v0.0.4:
 
-<img src="./docs/screenshot_v4.png" width="288" height ="512">
+<img src="./docs/screenshot_v4.png" width="270" height ="480">
 
 ----
 
