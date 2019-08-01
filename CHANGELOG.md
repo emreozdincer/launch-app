@@ -1,6 +1,16 @@
 # Changelog
 This changelog is intended to display the development process for the coding challenge.
 
+## [0.0.5] - 01-08-2019
+### Added
+- Implemented most of the *LaunchDetail* page except from missions tab
+- Implemented a fake stack navigator logic between *Dashboard* and *LaunchDetail* the existing library one was buggy
+- Added placeholder effects for images in *Dashboard* using *rn-placeholder* library
+- Added new screenshots to readme
+
+### Changed
+- Refactored the *Header* in *Dashboard* into a re-usable component under /components
+
 ## [0.0.4] - 31-07-2019
 ### Added
 - Implemented the required Card Views of Launches in Dashboard
@@ -28,6 +38,7 @@ This changelog is intended to display the development process for the coding cha
 ### Added
 - Initiated app with simple Login/SignUp/SignOut authentication flow using Firebase
 
+[0.0.5]: https://github.com/emreozdincer/launch-app/compare/v0.0.4...v0.0.5
 [0.0.4]: https://github.com/emreozdincer/launch-app/compare/v0.0.3...v0.0.4
 [0.0.3]: https://github.com/emreozdincer/launch-app/compare/v0.0.2...v0.0.3
 [0.0.2]: https://github.com/emreozdincer/launch-app/compare/v0.0.1...v0.0.2

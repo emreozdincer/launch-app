@@ -1,8 +1,10 @@
 import React from 'react'
-import { Button, Card, Icon } from 'react-native-elements'
-import { StyleSheet, Text, ScrollView, View } from 'react-native'
+import { Card } from 'react-native-elements'
+import { StyleSheet, Text, TouchableOpacity, ScrollView, View } from 'react-native'
 import firebase from 'react-native-firebase'
+import { Placeholder, PlaceholderMedia, Fade } from "rn-placeholder"
 
+import Header from '../components/Header'
 import { API_LAUNCHES, API_ROCKETS, URL_DEFAULT_ROCKET_IMG } from "../Constants"
 import parseDate from '../util/parseDate'
 import prettifyDate from '../util/prettifyDate'
@@ -119,11 +121,20 @@ export default class Dashboard extends React.Component {
     this.setState({ rocketImages, fetchingRocketImages: false })
   }
 
-  handleSignOut = () => {
+  handleLogOut = () => {
     firebase
       .auth()
       .signOut() // auto-navigates to login screen via the listener set in AuthLoading
       .catch(errorMessage => this.setState({ errorMessage }))
+  }
+
+  handleCardPress(launchId) {
+    const { launches, rocketImages } = this.state
+
+    this.props.navigation.navigate('LaunchDetail', {
+      launch: launches[launchId],
+      rocketImage: rocketImages[launchId]
+    })
   }
 
   renderLaunches() {
@@ -131,51 +142,38 @@ export default class Dashboard extends React.Component {
 
     const cards = launches.map((launch, i) => {
       const [date, time] = launch.windowstartGMT3String.split(' ')
-
-      return <Card
-        key={i}
-        image={rocketImages[i] ? { uri: rocketImages[i] } : undefined}
-      >
-        <Text style={styles.cardTitle}>{launch.name}</Text>
-        <View style={styles.cardDescription}>
-
-          <Text style={styles.cardDescriptionDate}>{date}</Text>
-          <Text style={styles.cardDescriptionTime}>{time}</Text>
-        </View>
-      </Card>
+      return (
+        <TouchableOpacity key={i}
+          // only enable press when images are loaded
+          onPress={rocketImages[i] ? () => this.handleCardPress(i) : undefined}
+        >
+          <Card
+            image={rocketImages[i] ? { uri: rocketImages[i] } : undefined}
+          >
+            {!rocketImages[i] ?
+              <Placeholder Animation={Fade}>
+                <PlaceholderMedia style={{ height: 150, width: '100%' }} />
+              </Placeholder>
+              : undefined // added the else statement because otherwise compiler complains about bad children
+            }
+            <Text style={styles.cardTitle}>{launch.name}</Text>
+            <View style={styles.cardDescription}>
+              <Text style={styles.cardDescriptionDate}>{date}</Text>
+              <Text style={styles.cardDescriptionTime}>{time}</Text>
+            </View>
+          </Card>
+        </TouchableOpacity>
+      )
     })
 
     return cards
   }
 
-  // TODO: Add placeholders while fetching
   render() {
-    const { currentUser, errorMessage, launches, rocketImages } = this.state
+    const { currentUser, errorMessage, launches } = this.state
     return (
       <View style={styles.container}>
-        {/* HEADER ROW*/}
-        <View style={styles.headerRow}>
-          <Text style={styles.headerText}>Launch List</Text>
-          <View style={styles.headerRightCol}>
-            {currentUser &&
-              <Text style={styles.currentUserText} numberOfLines={1}>
-                {currentUser.email}
-              </Text>
-            }
-            <Button
-              onPress={this.handleSignOut}
-              icon={<Icon
-                name="log-out"
-                type="feather"
-                color="white"
-              />}
-              title="Log out"
-              type="clear"
-              titleStyle={{color:'white', marginLeft: 5}}
-            />
-
-          </View>
-        </View>
+        <Header currentUser={currentUser} title={'Launch List'} logOutHandler={this.handleLogOut} />
 
         {/* MAIN VIEW */}
         <ScrollView style={styles.scrollView}>
@@ -187,6 +185,7 @@ export default class Dashboard extends React.Component {
             }
             {launches.length > 0 && this.renderLaunches()}
           </View>
+
         </ScrollView>
       </View>
     )
@@ -199,32 +198,6 @@ const styles = StyleSheet.create({
     alignItems: 'stretch',
     fontFamily: 'sans-serif',
   },
-  headerRow: {
-    flex: 0.1,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    backgroundColor: '#8ecccc',
-    color: 'white',
-    width: '100%',
-  },
-  headerText: {
-    flex: .5,
-    fontSize: 25,
-    marginLeft: 10,
-    textAlignVertical: 'center',
-    color: 'white',
-  },
-  headerRightCol: {
-    flex: .25,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginRight: 10,
-    marginBottom: 5,
-  },
-  currentUserText: {
-    color: 'white',
-    fontStyle: 'italic',
-  },
   scrollView: {
     flex: 0.9
   },
@@ -233,7 +206,6 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch',
     alignItems: 'stretch',
     justifyContent: 'center',
-    backgroundColor: 'green',
   },
   cardTitle: {
     fontSize: 16,
