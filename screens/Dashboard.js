@@ -1,6 +1,6 @@
 import React from 'react'
 import { Card } from 'react-native-elements'
-import { StyleSheet, Text, TouchableOpacity, ScrollView, View } from 'react-native'
+import { ActivityIndicator, StyleSheet, Text, TouchableOpacity, ScrollView, View } from 'react-native'
 import firebase from 'react-native-firebase'
 import { Placeholder, PlaceholderMedia, Fade } from "rn-placeholder"
 
@@ -170,7 +170,7 @@ export default class Dashboard extends React.Component {
   }
 
   render() {
-    const { currentUser, errorMessage, launches } = this.state
+    const { currentUser, errorMessage, fetchingLaunches } = this.state
     return (
       <View style={styles.container}>
         <Header currentUser={currentUser} title={'Launch List'} logOutHandler={this.handleLogOut} />
@@ -183,7 +183,7 @@ export default class Dashboard extends React.Component {
                 {errorMessage}
               </Text>
             }
-            {launches.length > 0 && this.renderLaunches()}
+            {fetchingLaunches ? <ActivityIndicator size="large" style={{marginTop: 40}}/> : this.renderLaunches()}
           </View>
 
         </ScrollView>

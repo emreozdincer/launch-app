@@ -4,9 +4,9 @@ Current Version: [v0.0.5](https://github.com/emreozdincer/launch-app/releases/ta
 
 See [CHANGELOG.md](CHANGELOG.md) for change/development history.
 
-## To-Dos
-* Persist state on Dashboard (probably easy via react-navigation)  
-* Implement favorites w/ firebase
+## To-Dos  
+* ~~Implement favorites~~ w/ firebase
+* Get and show missions
 * Implement infinite-scroll logic
 * UI improvements
 
