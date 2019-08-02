@@ -1,16 +1,19 @@
 # React-Native "Launch App"
 
-Current Version: [v0.0.5](https://github.com/emreozdincer/launch-app/releases/tag/v0.0.5)
+Current Version: [v0.1.0](https://github.com/emreozdincer/launch-app/releases/tag/v0.1.0)
 
 See [CHANGELOG.md](CHANGELOG.md) for change/development history.
 
 ## To-Dos  
-* ~~Implement favorites~~ w/ firebase
 * Get and show missions
 * Implement infinite-scroll logic
 * UI improvements
 
 ## Screenshots
+
+### v0.1.0:
+
+<img src="./docs/v1.0.png" width="270" height ="480">
 
 ### v0.0.5:
 <p float="left" align="center">

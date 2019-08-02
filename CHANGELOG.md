@@ -1,6 +1,10 @@
 # Changelog
 This changelog is intended to display the development process for the coding challenge.
 
+## [0.1.0] - 02-08-2019
+### Added
+- Implement like feature for Launches using Firebase
+
 ## [0.0.5] - 01-08-2019
 ### Added
 - Implemented most of the *LaunchDetail* page except from missions tab
@@ -38,6 +42,7 @@ This changelog is intended to display the development process for the coding cha
 ### Added
 - Initiated app with simple Login/SignUp/SignOut authentication flow using Firebase
 
+[0.1.0]: https://github.com/emreozdincer/launch-app/compare/v0.0.5...v0.1.0
 [0.0.5]: https://github.com/emreozdincer/launch-app/compare/v0.0.4...v0.0.5
 [0.0.4]: https://github.com/emreozdincer/launch-app/compare/v0.0.3...v0.0.4
 [0.0.3]: https://github.com/emreozdincer/launch-app/compare/v0.0.2...v0.0.3
