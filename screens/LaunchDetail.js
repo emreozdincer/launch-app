@@ -11,6 +11,7 @@ export default class LaunchDetail extends React.Component {
     showOverlay: false,
     launchStatusDescription: null,
     errorMessage: null,
+    isLiked: false,
   }
 
   componentDidMount() {
@@ -41,6 +42,11 @@ export default class LaunchDetail extends React.Component {
     return true
   }
 
+  // TODO: Make this an API call to firebase
+  handleLikeLaunch = () => {
+    this.setState({ isLiked: !this.state.isLiked })
+  }
+
   renderInformation(launch) {
     return (
       <>
@@ -60,20 +66,20 @@ export default class LaunchDetail extends React.Component {
     // TODO: Map over missions and list their results. Use placeholders while fetching
     return (
       <>
-        <Text style={styles.tag}>Launch ID</Text>
-        <Text style={styles.description}>{launch.id}</Text>
+        <Text style={styles.tag}>Mission Name</Text>
+        <Text style={styles.description}>Epic Mission #26</Text>
 
-        <Text style={styles.tag}>Hashtag</Text>
+        <Text style={styles.tag}>Type</Text>
         <Text style={styles.description}>{launch.hashtag ? launch.hashtag : 'None'}</Text>
 
-        <Text style={styles.tag}>Status</Text>
-        <Text style={styles.description}>{launch.status}</Text>
+        <Text style={styles.tag}>description</Text>
+        <Text style={styles.description}>Going to space with {launch.name}</Text>
       </>
     )
   }
 
   render() {
-    const { selectedIndex, showOverlay, launchStatusDescription, errorMessage } = this.state
+    const { selectedIndex, showOverlay, launchStatusDescription, errorMessage, isLiked } = this.state
     const launch = this.props.navigation.getParam('launch')
     const rocketImage = this.props.navigation.getParam('rocketImage')
 
@@ -97,11 +103,14 @@ export default class LaunchDetail extends React.Component {
 
         {/* Main View */}
         <View style={styles.mainView}>
+          {/* Cover Image */}
           <View style={styles.coverImageView}>
-            <TouchableOpacity onLongPress={() => this.setState({ showOverlay: true })}>
+            <TouchableOpacity onPress={() => this.setState({ showOverlay: true })}>
               <Image source={{ uri: rocketImage }} style={styles.coverImage} />
             </TouchableOpacity>
           </View>
+
+          {/* Menu */}
           <View style={styles.menuView}>
             {errorMessage && <Text style={{ color: 'red' }}>{errorMessage}</Text>}
             <ButtonGroup
@@ -115,6 +124,16 @@ export default class LaunchDetail extends React.Component {
                 selectedIndex === 0 && this.renderInformation(launch) ||
                 selectedIndex === 1 && this.renderMissions(launch)
               }
+            </View>
+            <View style={styles.heartView}>
+              <TouchableOpacity onPress={this.handleLikeLaunch}>
+                <Image
+                  source={require('../assets/heart.png')}
+                  style={styles.heartImage}
+                  resizeMode="contain"
+                />
+              </TouchableOpacity>
+              <Text style={styles.heartViewText}>{isLiked ? 'You liked this!' : ' '}</Text>
             </View>
           </View>
         </View>
@@ -166,5 +185,21 @@ const styles = StyleSheet.create({
   description: {
     fontSize: 18,
     color: 'black',
+  },
+  heartView: {
+    position: 'absolute',
+    right: 10,
+    bottom: 10,
+    width: 120,
+  },
+  heartViewText: {
+    textAlign: 'center',
+    fontSize: 16,
+    color: '#f76299',
+  },
+  heartImage: {
+    height: 40,
+    width: 40,
+    alignSelf: 'center',
   }
 })
