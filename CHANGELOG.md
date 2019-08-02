@@ -3,7 +3,7 @@ This changelog is intended to display the development process for the coding cha
 
 ## [0.1.0] - 02-08-2019
 ### Added
-- Implement like feature for Launches using Firebase
+- Implemented like feature for Launches using Firebase
 
 ## [0.0.5] - 01-08-2019
 ### Added
