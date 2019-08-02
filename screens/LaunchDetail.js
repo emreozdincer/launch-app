@@ -15,7 +15,7 @@ export default class LaunchDetail extends React.Component {
     isLiked: null,
   }
 
-  async componentDidMount() {
+  componentDidMount() {
     this.backHandler = BackHandler.addEventListener('hardwareBackPress', this.handleBackPress)
     this.collection = firebase.firestore().collection('likes')
 
