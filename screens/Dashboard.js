@@ -129,11 +129,12 @@ export default class Dashboard extends React.Component {
   }
 
   handleCardPress(launchId) {
-    const { launches, rocketImages } = this.state
+    const { launches, rocketImages, currentUser } = this.state
 
     this.props.navigation.navigate('LaunchDetail', {
       launch: launches[launchId],
-      rocketImage: rocketImages[launchId]
+      rocketImage: rocketImages[launchId],
+      userEmail: currentUser.email
     })
   }
 

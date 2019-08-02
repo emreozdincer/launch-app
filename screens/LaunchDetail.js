@@ -1,6 +1,7 @@
 import React from 'react'
-import { BackHandler, Dimensions, StyleSheet, View, TouchableOpacity } from 'react-native'
+import { ActivityIndicator, BackHandler, Dimensions, StyleSheet, View, TouchableOpacity } from 'react-native'
 import { ButtonGroup, Image, Overlay, Text } from 'react-native-elements'
+import firebase from 'react-native-firebase'
 
 import Header from '../components/Header'
 import { API_LAUNCH_STATUS } from '../Constants'
@@ -11,11 +12,26 @@ export default class LaunchDetail extends React.Component {
     showOverlay: false,
     launchStatusDescription: null,
     errorMessage: null,
-    isLiked: false,
+    isLiked: null,
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     this.backHandler = BackHandler.addEventListener('hardwareBackPress', this.handleBackPress)
+    this.collection = firebase.firestore().collection('likes')
+
+    const userEmail = this.props.navigation.getParam('userEmail')
+    const launch = this.props.navigation.getParam('launch')
+    const docRef = this.collection.doc(userEmail)
+
+    docRef.get()
+      .then(doc => {
+        if (doc.exists && doc.data()[launch.id]) {
+          this.setState({ isLiked: true })
+        } else {
+          this.setState({ isLiked: false })
+        }
+      })
+      .catch(errorMessage => this.setState({ errorMessage, isLiked: false }))
   }
 
   componentWillUnmount() {
@@ -42,9 +58,12 @@ export default class LaunchDetail extends React.Component {
     return true
   }
 
-  // TODO: Make this an API call to firebase
-  handleLikeLaunch = () => {
+  handleLikeLaunch(launch, userEmail) {
     this.setState({ isLiked: !this.state.isLiked })
+
+    this.collection.doc(userEmail).update({
+      [launch.id]: !this.state.isLiked
+    })
   }
 
   renderInformation(launch) {
@@ -82,6 +101,7 @@ export default class LaunchDetail extends React.Component {
     const { selectedIndex, showOverlay, launchStatusDescription, errorMessage, isLiked } = this.state
     const launch = this.props.navigation.getParam('launch')
     const rocketImage = this.props.navigation.getParam('rocketImage')
+    const userEmail = this.props.navigation.getParam('userEmail')
 
     if (launchStatusDescription === null) {
       this.fetchLaunchStatusDescription(launch.status)
@@ -126,14 +146,19 @@ export default class LaunchDetail extends React.Component {
               }
             </View>
             <View style={styles.heartView}>
-              <TouchableOpacity onPress={this.handleLikeLaunch}>
-                <Image
-                  source={require('../assets/heart.png')}
-                  style={styles.heartImage}
-                  resizeMode="contain"
-                />
-              </TouchableOpacity>
-              <Text style={styles.heartViewText}>{isLiked ? 'You liked this!' : ' '}</Text>
+              {isLiked === null ? <ActivityIndicator size="large" /> :
+                <>
+                  <TouchableOpacity onPress={() => this.handleLikeLaunch(launch, userEmail)}>
+                    <Image
+                      source={require('../assets/heart.png')}
+                      style={styles.heartImage}
+                      resizeMode="contain"
+                    />
+                  </TouchableOpacity>
+                  <Text style={styles.heartViewText}>{isLiked ? 'You liked this!' : ' '}</Text>
+                </>
+              }
+
             </View>
           </View>
         </View>
