@@ -120,6 +120,7 @@ const styles = StyleSheet.create({
     fontFamily: 'ProximaNova-Regular',
     color: 'rgba(24, 106, 106, 1)',
     fontSize: 17,
+    paddingVertical: 5,
   },
   text: {
     fontFamily: 'ProximaNova-SemiBold',
