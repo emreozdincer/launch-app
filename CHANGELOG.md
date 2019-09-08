@@ -1,6 +1,11 @@
 # Changelog
 This changelog is intended to display the development process for the coding challenge.
 
+
+## [0.2.0] - 08-09-2019
+### Added
+- Implemented a UI Design for login and signup pages
+
 ## [0.1.0] - 02-08-2019
 ### Added
 - Implemented like feature for Launches using Firebase
@@ -42,6 +47,7 @@ This changelog is intended to display the development process for the coding cha
 ### Added
 - Initiated app with simple Login/SignUp/SignOut authentication flow using Firebase
 
+[0.2.0]: https://github.com/emreozdincer/launch-app/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/emreozdincer/launch-app/compare/v0.0.5...v0.1.0
 [0.0.5]: https://github.com/emreozdincer/launch-app/compare/v0.0.4...v0.0.5
 [0.0.4]: https://github.com/emreozdincer/launch-app/compare/v0.0.3...v0.0.4
