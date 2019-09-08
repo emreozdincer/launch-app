@@ -1,6 +1,7 @@
 # Changelog
 This changelog is intended to display the development process for the coding challenge.
 
+
 ## [0.2.0] - 08-09-2019
 ### Added
 - Implemented a UI Design for login and signup pages

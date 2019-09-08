@@ -6,6 +6,8 @@ import { Image } from 'react-native-elements'
 
 import { ERROR_MSG_EMPTY_FIELDS } from "../Constants"
 
+import { ERROR_MSG_EMPTY_FIELDS } from "../Constants"
+
 export default class Login extends React.Component {
   state = { email: '', password: '', errorMessage: null }
 
