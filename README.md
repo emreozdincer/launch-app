@@ -1,15 +1,17 @@
-# React-Native "Launch App"
+# React-Native Launch App / "RocketCo"
 
-Current Version: [v0.1.0](https://github.com/emreozdincer/launch-app/releases/tag/v0.1.0)
+Current Version: [v0.2.0](https://github.com/emreozdincer/launch-app/releases/tag/v0.2.0)
 
 See [CHANGELOG.md](CHANGELOG.md) for change/development history.
 
 ## To-Dos  
 * Get and show missions
 * Implement infinite-scroll logic
-* UI improvements
 
 ## Screenshots
+
+### v0.2.0:
+<img src="./docs/v0.2.png" width="270" height ="480">
 
 ### v0.1.0:
 

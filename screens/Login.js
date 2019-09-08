@@ -2,7 +2,7 @@ import React from 'react'
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import firebase from 'react-native-firebase'
 import LinearGradient from 'react-native-linear-gradient'
-import { Button, Image } from 'react-native-elements'
+import { Image } from 'react-native-elements'
 
 import { ERROR_MSG_EMPTY_FIELDS } from "../Constants"
 
@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
     marginTop: 15,
   },
   inputBoxEmail: {
-    height: 37,
+    height: 38,
     width: '100%',
     borderRadius: 14,
     backgroundColor: '#F0FFFF',
@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   inputBoxPassword: {
-    height: 37,
+    height: 38,
     width: '100%',
     borderRadius: 14,
     backgroundColor: '#F0FFFF',
@@ -122,9 +122,9 @@ const styles = StyleSheet.create({
     fontSize: 17,
   },
   text: {
-    fontFamily: 'ProximaNova-Regular',
+    fontFamily: 'ProximaNova-SemiBold',
     color: 'white',
-    fontSize: 18,
+    fontSize: 17,
   },
   actions: {
     flexDirection: 'row',
