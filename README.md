@@ -13,8 +13,6 @@ See [CHANGELOG.md](CHANGELOG.md) for change/development history.
 ### v0.2.0:
 <img src="./docs/v0.2.png" width="270" height ="480">
 
-## Screenshots
-
 ### v0.1.0:
 
 <img src="./docs/v1.0.png" width="270" height ="480">
