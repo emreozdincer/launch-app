@@ -1,4 +1,4 @@
-# React-Native Launch App / "RocketCo"
+# "RocketCo" / App about rockets w/ React-Native 
 
 Current Version: [v0.2.0](https://github.com/emreozdincer/launch-app/releases/tag/v0.2.0)
 
