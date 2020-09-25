@@ -5,9 +5,16 @@ Current Version: [v0.2.0](https://github.com/emreozdincer/launch-app/releases/ta
 
 See [CHANGELOG.md](CHANGELOG.md) for change/development history.
 
-## To-Dos  
-* Get and show missions
-* Implement infinite-scroll logic
+## Features
+* Usual app navigation/flow
+   * login/signup page
+   * dashboard page: display a list of data
+   * page to display a single data with details
+   * simple ui elements like loading indicators, background-faded popups, tabs/switches, navigation buttons, like buttons
+* Authentication with Firebase
+* Simple NoSQL database with Firebase
+* Usage of a standardized API to fetch data
+* Best practices such as keeping an external constants (config) file, components/screens based folder structure, keeping a very detailed documentation (see changelog and readme), minimal number of dependencies etc.
 
 ## Screenshots
 
@@ -29,6 +36,6 @@ See [CHANGELOG.md](CHANGELOG.md) for change/development history.
 
 <img src="./docs/screenshot_v4.png" width="270" height ="480">
 
-----
-
-P.S: App is developed only with an Android Emulator.
+## To-Dos  
+* Get and show missions
+* Implement infinite-scroll logic
